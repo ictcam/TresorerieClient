@@ -1,0 +1,98 @@
+<!--<div class="container-fluid global-container ">-->
+    <!--<div class="card login-form ">-->
+        <!--<div class="card-body">-->
+            <!--<h3 class="card-title text-center">Alpi Trésorerie</h3>-->
+            <!--<div class="card-text">-->
+                <!--<form [formGroup]="loginForm">-->
+                    <!--&lt;!&ndash; to error: add class "has-danger" &ndash;&gt;-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="exampleEmail" class="">Username</label>-->
+                        <!--<input formControlName="username" id="exampleEmail" placeholder="example@alpiwood.com" type="text" class="form-control" [(ngModel)]="credentials.username">-->
+                    <!--<div style="color: #f65656" *ngIf="loginForm.controls['username'].invalid && (loginForm.controls['username'].touched)">-->
+                        <!--<span>*</span> au moins 3 caractères requis-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="examplePassword" class="">Password</label>-->
+                        <!--<input formControlName="password" id="examplePassword" placeholder="*****" type="password" class="form-control" [(ngModel)]="credentials.password">-->
+                        <!--<div style="color: #f65656" *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].touched) ">-->
+                            <!--<span>*</span> le mot de passe doit comporter au moins 4 caractères-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<button [disabled]="loginForm.invalid || loginForm.pristine" (click)="onSubmits()" class="btn btn-primary btn-block">Connexion</button>-->
+                <!--</form>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div>
+    <div id="app">
+        <section class="section">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+                        <div class="login-brand">
+                            <img src="../../../assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
+                        </div>
+
+                        <div class="card card-primary">
+                            <div class="card-header"><h4>Login</h4></div>
+
+                            <div class="card-body">
+                                <form [formGroup]="loginForm">
+                                    <div class="form-group">
+                                        <label for="email">Username</label>
+                                        <input id="email" type="text" formControlName="username" class="form-control" name="email" tabindex="1" required autofocus>
+                                        <!--<div class="invalid-feedback">-->
+                                            <!--Please fill in your email-->
+                                        <!--</div>-->
+                                        <div class="invalid-feedback" *ngIf="loginForm.controls['username'].invalid && (loginForm.controls['username'].touched)">
+                                        <span>*</span> au moins 3 caractères requis
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="d-block">
+                                            <label for="password" class="control-label">Password</label>
+                                            <!--<div class="float-right">-->
+                                                <!--<a href="auth-forgot-password.html" class="text-small">-->
+                                                    <!--Forgot Password?-->
+                                                <!--</a>-->
+                                            <!--</div>-->
+                                        </div>
+                                        <input id="password" formControlName="password"  type="password" class="form-control" name="password" tabindex="2" required>
+                                        <!--<div class="invalid-feedback">-->
+                                            <!--please fill in your password-->
+                                        <!--</div>-->
+                                        <div class="invalid-feedback" *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].touched) ">
+                                        <span>*</span> le mot de passe doit comporter au moins 4 caractères
+                                        </div>
+                                    </div>
+
+                                    <!--<div class="form-group">-->
+                                        <!--<div class="custom-control custom-checkbox">-->
+                                            <!--<input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">-->
+                                            <!--<label class="custom-control-label" for="remember-me">Remember Me</label>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+
+                                    <div class="form-group">
+                                        <button type="submit" [disabled]="loginForm.invalid || loginForm.pristine" (click)="onSubmits()" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                                            Login
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="simple-footer">
+                            Copyright &copy; ACON 2021
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+

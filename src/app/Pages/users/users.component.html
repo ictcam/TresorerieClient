@@ -1,0 +1,217 @@
+<div class="wrapper " *ngIf="authority == 'super_admin'">
+<app-sidebar></app-sidebar>
+    <div class="main-panel" id="main-panel">
+        <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+            <div class="container-fluid">
+                <div class="navbar-wrapper">
+                    <div class="navbar-toggle">
+                        <button type="button" class="navbar-toggler">
+                            <span class="navbar-toggler-bar bar1"></span>
+                            <span class="navbar-toggler-bar bar2"></span>
+                            <span class="navbar-toggler-bar bar3"></span>
+                        </button>
+                    </div>
+                    <a class="navbar-brand">DROITS D'ACCES</a>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#pablo">
+                                <i class="fa fa-file-pdf-o"></i>
+                                <p>
+                                    <span class="d-lg-none d-md-block">Rapport</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#pablo">
+                                <i class="now-ui-icons users_single-02"></i>  {{info.username | titlecase}}
+                                <p>
+                                    <span class="d-lg-none d-md-block">Account</span>
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+        <div class="panel-header panel-header-lg h-auto" >
+        </div>
+        <div class="content">
+            <div *ngIf="show" class="row">
+                <div class="col-lg-12">
+                    <div class="card card-chart">
+                        <div class="card-header">
+                            <h4 class="card-title">Nouvel Utilisateur</h4>
+                            <div class="dropdown">
+                                <!--<p class="card-category">Solde : <b>{{solde}} <small> Fcfa</small></b>  </p>-->
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!--<div class="chart-area">-->
+                            <form id="signupForm" class="col-md-12 mx-auto" [formGroup]="discForm">
+                                <div class="form-group">
+                                    <div class="">
+                                        <label for="date">Username</label>
+                                        <input [ngClass]="{'fred': discForm.controls['username'].invalid && (discForm.controls['username'].touched)}"
+                                               id="date" type="text" class="form-control-sm form-control"
+                                               formControlName="username"/>
+                                        <div style="color: #f65656; font-style: italic;"
+                                             *ngIf="discForm.controls['username'].invalid && (discForm.controls['username'].touched) ">
+                                            <span>*</span> champs obligatoire
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="">
+                                        <label for="montant">Password</label>
+                                        <input [ngClass]="{'fred': discForm.controls['password'].invalid && (discForm.controls['password'].touched)}"
+                                               id="montant" type="password" class="form-control-sm form-control"
+                                               formControlName="password"/>
+                                        <div style="color: #f65656; font-style: italic;"
+                                             *ngIf="discForm.controls['password'].invalid && (discForm.controls['password'].touched) ">
+                                            <span>*</span> Veuillez rentrer un montant valide
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                <div class="">
+                                    <div class="position-relative form-check-inline">
+                                        <div class="custom-radio custom-control position-relative form-group">
+                                            <input type="radio" id="exampleCustomRadio1" name="role"
+                                                   class="custom-control-input" value="admin" formControlName="role"
+                                                   required>
+                                            <label class="custom-control-label"
+                                                   for="exampleCustomRadio1">Admin</label>
+                                        </div>
+                                    </div>
+                                    <div class="position-relative form-check-inline">
+                                        <div class="custom-radio custom-control position-relative form-group">
+                                            <input type="radio" id="exampleCustomRadio2" name="role"
+                                                   class="custom-control-input" value="super_admin" formControlName="role"
+                                                   required>
+                                            <label class="custom-control-label"
+                                                   for="exampleCustomRadio2">Super Admin </label>
+
+                                        </div>
+                                    </div>
+                                    <div class="position-relative form-check-inline">
+                                        <div class="custom-radio custom-control position-relative form-group">
+                                            <input type="radio" id="exampleCustomRadio" name="role"
+                                                   class="custom-control-input" value="tresorier" formControlName="role"
+                                                   required>
+                                            <label class="custom-control-label"
+                                                   for="exampleCustomRadio">Trésorier </label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-sm" (click)="add()"
+                                            [disabled]="discForm.invalid || discForm.pristine">
+                                        Enregistrer
+                                    </button>
+                                </div>
+                            </form>
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card card-chart">
+                        <div class="card-header">
+                            <h4 class="card-title">Liste des Utilisateurs</h4>
+                            <div class="dropdown">
+                                <!--<p class="card-category">Solde : <b>{{solde}} <small> Fcfa</small></b>  </p>-->
+                                <button class="btn btn-primary" (click)="show = true">Ajouter</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!--<div class="chart-area">-->
+                            <div class="bod">
+                                <div class="tbl-header">
+                                    <table class="tables" cellpadding="0" cellspacing="0" border="0">
+                                        <thead>
+                                        <tr>
+                                            <th class="th">Utilisateur</th>
+                                            <th class="th">Rôle</th>
+                                            <th class="th">Action</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="tbl-content">
+                                    <table class="tables" cellpadding="0" cellspacing="0" border="0">
+                                        <tbody *ngIf="users.length && loaders == false ">
+                                        <tr *ngFor="let user of users;">
+                                            <td class="td">{{user.username}}</td>
+                                            <td class="td">
+                                                {{user.role == 'ROLE_ADMIN' ? 'Admin' : user.role == 'ROLE_SUPER_ADMIN' ? 'Super Admin' : 'Tresorier'}}
+                                            </td>
+                                            <td class="td">
+                                                <small>h</small>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <p *ngIf="!users.length && loaders == false"
+                                       style="color: grey; font-size: 1.5rem;" class="text-center">
+                                        Aucun utilisateur trouvé !
+                                    </p>
+                                </div>
+                            </div>
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class=" container-fluid ">
+                <nav>
+                    <ul>
+                        <li>
+                            <a >
+                                User: {{info.username | titlecase}}
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="copyright" id="copyright">
+                    Alpicam Industries 2021.
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<!--   Core JS Files   -->
+<!--<script src="../../../assets/new/js/core/jquery.min.js"></script>-->
+<!--<script src="../../../assets/new/js/core/popper.min.js"></script>-->
+<!--<script src="../../../assets/new/js/core/bootstrap.min.js"></script>-->
+<!--<script src="../../../assets/new/js/plugins/perfect-scrollbar.jquery.min.js"></script>-->
+<!--&lt;!&ndash;  Google Maps Plugin    &ndash;&gt;-->
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>-->
+<!--&lt;!&ndash; Chart JS &ndash;&gt;-->
+<!--<script src="../../../assets/new/js/plugins/chartjs.min.js"></script>-->
+<!--&lt;!&ndash;  Notifications Plugin    &ndash;&gt;-->
+<!--<script src="../../../assets/new/js/plugins/bootstrap-notify.js"></script>-->
+<!--&lt;!&ndash; Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc &ndash;&gt;-->
+<!--<script src="../../../assets/new/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script>&lt;!&ndash; Now Ui Dashboard DEMO methods, don't include it in your project! &ndash;&gt;-->
+<!--<script src="../../../assets/new/demo/demo.js"></script>-->
+<!--<script>-->
+    <!--$(document).ready(function() {-->
+        <!--// Javascript method's body can be found in assets/js/demos.js-->
+        <!--demo.initDashboardPageCharts();-->
+
+    <!--});-->
+<!--</script>-->

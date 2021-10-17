@@ -1,0 +1,285 @@
+<div class="wrapper ">
+    <app-sidebar></app-sidebar>
+    <div class="main-panel" id="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+            <div class="container-fluid">
+                <div class="navbar-wrapper">
+                    <div class="navbar-toggle">
+                        <button type="button" class="navbar-toggler">
+                            <span class="navbar-toggler-bar bar1"></span>
+                            <span class="navbar-toggler-bar bar2"></span>
+                            <span class="navbar-toggler-bar bar3"></span>
+                        </button>
+                    </div>
+                    <a class="navbar-brand">Dashboard</a>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+                        aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                    <!--<form>-->
+                    <!--<div class="input-group no-border">-->
+                    <!--<input type="text" value="" class="form-control" placeholder="Search...">-->
+                    <!--<div class="input-group-append">-->
+                    <!--<div class="input-group-text">-->
+                    <!--<i class="now-ui-icons ui-1_zoom-bold"></i>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</form>-->
+                    <form [formGroup]="selectPanForm">
+                        <div class="no-border">
+                        <select (change)="findSso($event)" class="form-control form-control-sm" formControlName="periode">
+                            <option value="" selected disabled hidden>Sélectionner une période</option>
+                            <!--<option value="ttesp">Toutes les pannes</option>-->
+                            <!--<option value="tp" >Aujourd'hui</option>-->
+                            <option value="hp">Hier</option>
+                            <option value="twp">Cette Semaine</option>
+                            <option value="lwp">Semaine Dernière</option>
+                            <option value="tmp">Ce mois</option>
+                            <option value="lmp">Mois Dernier</option>
+                            <!--<option value="pp">Personaliser la recherche</option>-->
+                        </select>
+                        </div>
+                    </form>
+                    <!--<form [formGroup]="rangeForm"  >-->
+                        <!--<div class="row">-->
+
+                            <!--<div class="col-md-4">-->
+                                <!--<input type="date" [ngClass]="{'fred': rangeForm.controls['date1'].invalid && (rangeForm.controls['date1'].touched)}" [(ngModel)]="d" placeholder="BCP002" class="form-control form-control-sm" formControlName="date1">-->
+                            <!--</div>-->
+                            <!--<div class="col-md-4">-->
+                                <!--<input type="date" [ngClass]="{'fred': rangeForm.controls['date2'].invalid && (rangeForm.controls['date2'].touched) || (f < d)}" [(ngModel)]="f" min="{{d}}" placeholder="Electricien" class="form-control form-control-sm" formControlName="date2">-->
+                            <!--</div>-->
+                            <!--<div class="col-md-2">-->
+                                <!--<button [disabled]="(f < d) || rangeForm.pristine && rangeForm.invalid || !d || !f" class="btn-transition btn btn-sm btn-shadow btn-outline-primary form-control-sm form-control" (click)="rangeDate()" type="submit"><i class="fa fa-search"></i></button>-->
+
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</form>-->
+                    <ul class="navbar-nav">
+                        <li class="nav-item" (click)="open(mymodal); getProvisoir()" title="Pièces de Caisse Provisoires">
+                            <a class="nav-link">
+                                <p class="btn btn-primary">
+                                    <!--<i class="fa fa-eraser"></i>-->
+                                    P
+                                    <span class="badge badge-danger">{{provisoirs.length}}</span>
+                                </p>
+                            </a>
+                        </li>
+                        <!--<li class="nav-item" (click)=" swl()" title="Erreur">-->
+                            <!--<a class="nav-link">-->
+                                <!--<i class="fa fa-eraser"></i>-->
+                                <!--<p>-->
+                                    <!--<span class="d-lg-none d-md-block">Rapport</span>-->
+                                <!--</p>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <li class="nav-item" (click)=" downloads()" title="Rapport PDF">
+                            <a class="nav-link">
+                                <i class="fa fa-file-pdf-o"></i>
+                                <p>
+                                    <span class="d-lg-none d-md-block">Rapport</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item" (click)="getCaisse(); getSolde(); last30days()"  title="Rafraîchir les données">
+                            <a class="nav-link">
+                                <i class="now-ui-icons loader_refresh"></i>
+                                <p>
+                                    <span class="d-lg-none d-md-block">Reload</span>
+                                </p>
+                            </a>
+
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                <i class="now-ui-icons users_single-02"></i> {{info.username | titlecase}}
+                                <p>
+                                    <span class="d-lg-none d-md-block">Account</span>
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+        <div class="panel-header panel-header-lg h-auto">
+            <!--<canvas id="bigDashboardChart"></canvas>-->
+            <app-chart
+                    [type]="'line'"
+                    [data]="datas.datasets"
+                    [lineChartLabels]="datas.labels"
+            ></app-chart>
+            <!--<div class="row" style="height: 100px; width: 400px; background: red">-->
+
+            <!--</div>-->
+        </div>
+        <div class="content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card card-chart">
+                        <div class="card-header">
+                            <h5 class="card-category">{{date}}</h5>
+                            <h4 class="card-title">Caisse Alpicam Industries</h4>
+                            <div class="dropdown">
+                                <p class="card-category">Solde du {{lastSolde.date }} : <b>{{lastSolde.solde}}
+                                    <small> Fcfa</small>
+                                </b></p>
+                                <p >
+
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!--<div class="chart-area">-->
+                            <div class="bod">
+                                <div class="tbl-header">
+                                    <table class="tables" cellpadding="0" cellspacing="0" border="0">
+                                        <thead>
+                                        <tr>
+                                            <th class="th" *ngIf="showDate">Date</th>
+                                            <th class="th">Pièces</th>
+                                            <th class="th">Mouvements Caisse</th>
+                                            <th class="th">Encaissement</th>
+                                            <th class="th">Décaissement</th>
+                                            <th class="th">Solde</th>
+                                            <th class="th">Centre Coût</th>
+                                            <th class="th" *ngIf="!showDate && authority == 'tresorier'">Action</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="tbl-content">
+                                    <table class="tables" cellpadding="0" cellspacing="0" border="0">
+                                        <tbody *ngIf="caisses.length && loaders == false ">
+                                        <tr *ngFor="let c of caisses; let i of index" [ngClass]="{'bg-w': c.provisoir == true }">
+                                            <td class="td" *ngIf="showDate">{{c.date | date: 'dd/MM/yyyy'}}</td>
+                                            <td class="td">{{c.piece}}</td>
+                                            <td class="td">{{c.mouvement}}</td>
+                                            <td class="td">{{c.encaissement}}
+                                                <small>Fcfa</small>
+                                            </td>
+                                            <td class="td">{{c.decaissement}}
+                                                <small>Fcfa</small>
+                                            </td>
+                                            <td class="td">{{c.solde}}
+                                                <small>Fcfa</small>
+                                            </td>
+                                            <td class="td">{{c.cc}}
+                                            </td>
+                                            <td class="td" *ngIf="!showDate && authority == 'tresorier'">
+                                                <i style="cursor: pointer" class="fa fa-pencil text-primary" [routerLink]="['/edit', c.id]"></i>
+                                                <!--<i class="fa fa-times text-danger"></i>-->
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <p *ngIf="!caisses.length && loaders == false"
+                                       style="color: grey; font-size: 1.5rem;" class="text-center">
+                                        Aucun mouvement dans la caisse !
+                                    </p>
+                                </div>
+                            </div>
+                            <!--</div>-->
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats pull-left">
+                                Encaissement : <b>{{entree}}
+                                <small>Fcfa</small>
+                            </b>
+                            </div>
+                            <div class="stats pull-right">
+                                Décaissement : <b>{{sortie}}
+                                <small>Fcfa</small>
+                            </b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card card-chart">
+                        <div class="card-header">
+                            <h4 class="card-title">Statistique par centre coût des 30 derniers jours</h4>
+                        </div>
+                        <div class="card-body">
+                            <!--<div class="chart-area">-->
+                            <app-dash
+                                    [type]="'line'"
+                                    [data]="group.datasets"
+                                    [lineChartLabels]="group.labels"
+                            ></app-dash>
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class=" container-fluid ">
+                <nav>
+                    <ul>
+                        <li>
+                            <a>
+                                User: {{info.username | titlecase}}
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="copyright" id="copyright">
+                    Alpicam Industries 2021.
+                </div>
+            </div>
+        </footer>
+        <ng-template #mymodal let-modal >
+            <div class="modal-header">
+                <h6 class="modal-title timeline-title" id="modal-basic-title"><b>Pièces de Caisse Provisoires</b></h6>
+                <div class="close vertical-timeline-element-content bounce-in" (click)="modal.close('save click')" >
+                    <i class="fa fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Pièce</th>
+                        <th scope="col">Montant</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let p of provisoirs">
+                        <th scope="row">{{p.date | date: 'dd/MM/yyyy'}}</th>
+                        <td>{{p.piece}}</td>
+                        <td>{{p.decaissement}}</td>
+                        <td><input type="checkbox"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>
+                    <button class="btn btn-warning">modifier</button>
+                </p>
+
+            </div>
+            <div class="d-block clearfix card-footer ">
+                <div class="float-right" *ngIf="authority === 'super_admin'">
+                    <div>
+                        <button class="btn btn-primary" (click)="modal.close('save click')" >Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>
+<!--   Core JS Files   -->
+

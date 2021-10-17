@@ -1,0 +1,41 @@
+<div class="sidebar" data-color="gradient">
+    <!--
+      Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+  -->
+    <div class="logo">
+        <!--<a href="http://www.creative-tim.com" class="simple-text logo-mini">-->
+        <!--CT-->
+        <!--</a>-->
+        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+            BROUILLARD DE CAISSE
+        </a>
+    </div>
+    <div class="sidebar-wrapper" id="sidebar-wrapper">
+        <ul class="nav">
+            <li routerLinkActive="active"  *ngIf="authority == 'tresorier' || authority == 'super_admin' || authority == 'admin'">
+                <a routerLink="/dashboard">
+                    <i class="now-ui-icons business_money-coins"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" *ngIf="authority == 'tresorier' || authority == 'super_admin'">
+                <a routerLink="/new-instance">
+                    <i class="now-ui-icons ui-1_simple-add"></i>
+                    <p>Nouvelle instance</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" *ngIf="authority == 'super_admin'">
+                <a routerLink="/users">
+                    <i class="now-ui-icons users_single-02"></i>
+                    <p>Administration</p>
+                </a>
+            </li>
+            <li class="active-pro" (click)="logout()">
+                <a class="bg-danger text-white font-weight-bold" >
+                    <i class="now-ui-icons arrows-1_minimal-left text-white font-weight-bold"></i>
+                    <p>Déconnexion</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
